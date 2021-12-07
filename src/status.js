@@ -1,10 +1,18 @@
-import { checkBox, clearCont } from './check.js';
+import { checkBox, clearCont, getLocalStorage, setLocalStorage } from './check.js';
 
 const addTask = document.querySelector('.subheading');
 
 // let task;
 let input;
 const taskContainer = document.getElementById('taskContainer');
+
+// const getLocalStorage = () => {
+//   return JSON.parse(localStorage.getItem('tasks'));
+// }
+
+// const setLocalStorage = (arr) => {
+//   localStorage.setItem('tasks', JSON.stringify(arr));
+// }
 
 const tasks = [];
 function Task(description, completed, index) {
@@ -21,9 +29,11 @@ const editDescription = () => {
       if (e.key === 'Enter') {
         e.preventDefault();
         input = label.innerText;
-        const stored = JSON.parse(localStorage.getItem('tasks'));
+        // const stored = JSON.parse(localStorage.getItem('tasks'));
+        const stored = getLocalStorage();
         stored[i].description = input;
-        localStorage.setItem('tasks', JSON.stringify(stored));
+        // localStorage.setItem('tasks', JSON.stringify(stored));
+        setLocalStorage(stored);
         editSpan[i].style.display = 'block';
         setTimeout(() => {
           editSpan[i].style.display = 'none';
@@ -66,7 +76,8 @@ const generateTasks = (arr) => {
         } else {
           arr[i].completed = false;
         }
-        localStorage.setItem('tasks', JSON.stringify(tasks));
+        // localStorage.setItem('tasks', JSON.stringify(tasks));
+        setLocalStorage(tasks);
       });
     });
     editDescription();
@@ -78,10 +89,12 @@ const generateTasks = (arr) => {
 addTask.addEventListener('keypress', (e) => {
   if (addTask.value !== '' && e.key === 'Enter') {
     if (localStorage.length !== 0) {
-      const storedTasks = JSON.parse(localStorage.getItem('tasks'));
+      // const storedTasks = JSON.parse(localStorage.getItem('tasks'));
+      const storedTasks = getLocalStorage();
       const task = new Task(addTask.value, false, storedTasks.length);
       storedTasks.push(task);
-      localStorage.setItem('tasks', JSON.stringify(storedTasks));
+      // localStorage.setItem('tasks', JSON.stringify(storedTasks));
+      setLocalStorage(storedTasks);
       clearCont();
       generateTasks(storedTasks);
       checkBox(storedTasks);
@@ -89,7 +102,8 @@ addTask.addEventListener('keypress', (e) => {
     } else {
       const task = new Task(addTask.value, false, tasks.length);
       tasks.push(task);
-      localStorage.setItem('tasks', JSON.stringify(tasks));
+      // localStorage.setItem('tasks', JSON.stringify(tasks));
+      setLocalStorage(tasks);
       clearCont();
       generateTasks(tasks);
       checkBox(tasks);
@@ -102,12 +116,14 @@ const deleteTask = (arr) => {
   deleteBtns.forEach((button, i) => {
     button.addEventListener('click', () => {
       if (localStorage.length !== 0) {
-        const storedTasks = JSON.parse(localStorage.getItem('tasks'));
+        // const storedTasks = JSON.parse(localStorage.getItem('tasks'));
+        const storedTasks = getLocalStorage();
         storedTasks.splice(i, 1);
         storedTasks.forEach((task, i) => {
           task.index = i;
         });
-        localStorage.setItem('tasks', JSON.stringify(storedTasks));
+        // localStorage.setItem('tasks', JSON.stringify(storedTasks));
+        setLocalStorage(storedTasks);
         clearCont();
         generateTasks(storedTasks);
       } else {
@@ -115,7 +131,8 @@ const deleteTask = (arr) => {
         arr.forEach((task, i) => {
           task.index = i;
         });
-        localStorage.setItem('tasks', JSON.stringify(arr));
+        // localStorage.setItem('tasks', JSON.stringify(arr));
+        setLocalStorage(arr);
         clearCont();
         generateTasks(arr);
       }
@@ -130,7 +147,8 @@ const clearAll = (arr) => {
     openTasks.forEach((task, i) => {
       task.index = i;
     });
-    localStorage.setItem('tasks', JSON.stringify(openTasks));
+    // localStorage.setItem('tasks', JSON.stringify(openTasks));
+    setLocalStorage(openTasks);
     clearCont();
     generateTasks(openTasks);
   });

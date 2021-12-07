@@ -4,13 +4,14 @@ import {
   tasks, deleteTask, clearAll, generateTasks,
 } from './status.js';
 
-import { checkBox } from './check.js';
+import { checkBox, getLocalStorage } from './check.js';
 
 let storedTasks = [];
 
 const update = () => {
   if (localStorage.length !== 0) {
-    storedTasks = JSON.parse(localStorage.getItem('tasks'));
+    // storedTasks = JSON.parse(localStorage.getItem('tasks'));
+    storedTasks = getLocalStorage();
     generateTasks(storedTasks);
     checkBox(storedTasks);
     deleteTask(storedTasks);

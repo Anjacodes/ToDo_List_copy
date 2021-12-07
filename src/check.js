@@ -14,4 +14,12 @@ const clearCont = () => {
   taskContainer.innerHTML = '';
 };
 
-export { checkBox, clearCont };
+const getLocalStorage = () => {
+  return JSON.parse(localStorage.getItem('tasks'));
+}
+
+const setLocalStorage = (arr) => {
+  localStorage.setItem('tasks', JSON.stringify(arr));
+}
+
+export { checkBox, clearCont, getLocalStorage, setLocalStorage };

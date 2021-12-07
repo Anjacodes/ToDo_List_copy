@@ -7,6 +7,8 @@ module.exports = {
   devtool: 'inline-source-map',
   devServer: {
     static: './dist',
+    open: true,
+    compress: true,
   },
   plugins: [
     new HmtlWebpackPlugin({
